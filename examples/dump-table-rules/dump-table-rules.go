@@ -23,9 +23,9 @@ import (
 	"fmt"
 	"os"
 
-	common "github.com/gdm85/go-libiptc"
-	"github.com/gdm85/go-libiptc/libip4tc"
-	"github.com/gdm85/go-libiptc/libip6tc"
+	common "github.com/nnnewb/go-libiptc"
+	"github.com/nnnewb/go-libiptc/libip4tc"
+	"github.com/nnnewb/go-libiptc/libip6tc"
 )
 
 func showSyntax() {

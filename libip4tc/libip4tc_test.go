@@ -1,6 +1,6 @@
 /*
  * go-libiptc v0.3.1 - libiptc bindings for Go language
- * Copyright (C) 2015~2016 gdm85 - https://github.com/gdm85/go-libiptc/
+ * Copyright (C) 2015~2016 gdm85 - https://github.com/nnnewb/go-libiptc/
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -22,7 +22,7 @@ package libip4tc
 import (
 	"testing"
 
-	common "github.com/gdm85/go-libiptc"
+	common "github.com/nnnewb/go-libiptc"
 )
 
 func TestXtablesLock(t *testing.T) {

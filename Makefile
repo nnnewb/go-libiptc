@@ -8,7 +8,8 @@ build:
 	cd libip6tc && go build
 
 test:
-	go test
+	docker build ./distro/centos -t centos-tester
+	docker run --privileged --rm -it -v $(shell pwd):/app centos-tester go test ./...
 
 examples: examples/dump-table-raw/dump-table-raw examples/dump-table-rules/dump-table-rules examples/lock/lock
 

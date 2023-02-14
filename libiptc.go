@@ -1,6 +1,6 @@
 /*
  * go-libiptc v0.3.1 - libiptc bindings for Go language
- * Copyright (C) 2015~2016 gdm85 - https://github.com/gdm85/go-libiptc/
+ * Copyright (C) 2015~2016 gdm85 - https://github.com/nnnewb/go-libiptc/
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 package libiptc
 
 import (
-	// #cgo LDFLAGS: -liptc
+	// #cgo pkg-config: libiptc
 	// #include "xtables-lock.h"
 	"C"
 	"fmt"

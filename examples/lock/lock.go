@@ -24,7 +24,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/gdm85/go-libiptc"
+	"github.com/nnnewb/go-libiptc"
 )
 
 func main() {

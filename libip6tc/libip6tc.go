@@ -1,6 +1,6 @@
 /*
  * go-libiptc v0.3.1 - libiptc bindings for Go language
- * Copyright (C) 2015~2016 gdm85 - https://github.com/gdm85/go-libiptc/
+ * Copyright (C) 2015~2016 gdm85 - https://github.com/nnnewb/go-libiptc/
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -20,7 +20,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 package libip6tc
 
 import (
-	// #cgo LDFLAGS: -lip6tc
+	// #cgo pkg-config: libip6tc
 	// #include <libiptc/libip6tc.h>
 	// #include <stdlib.h>
 	"C"
@@ -28,7 +28,7 @@ import (
 	"runtime"
 	"unsafe"
 
-	common "github.com/gdm85/go-libiptc"
+	common "github.com/nnnewb/go-libiptc"
 )
 
 func cin6addr2ip(cAaddr, cMask C.struct_in6_addr) *net.IPNet {
@@ -235,7 +235,7 @@ func (h XtcHandle) GetPolicy(chain string) (policy string, counters common.XtCou
 		cStr := C.CString(chain)
 		defer C.free(unsafe.Pointer(cStr))
 
-		var c _Ctype_struct_xt_counters
+		var c C.struct_xt_counters
 		cStr = C.ip6tc_get_policy(cStr, &c, h.handle)
 		if cStr == nil {
 			// no chains
@@ -273,8 +273,11 @@ func (h XtcHandle) InsertEntry(chain common.XtChainLabel, entry IptEntry, ruleNu
 	}, "ip6tc_insert_entry", getNativeError)
 }
 
-/* Append entry `e' to chain `chain'.  Equivalent to insert with
-   rulenum = length of chain. */
+/*
+Append entry `e' to chain `chain'.  Equivalent to insert with
+
+	rulenum = length of chain.
+*/
 func (h XtcHandle) AppendEntry(chain common.XtChainLabel, entry IptEntry) error {
 	return common.RelayCall(func() bool {
 		cStr := C.CString(string(chain))
@@ -313,8 +316,11 @@ func (h XtcHandle) CheckEntry(chain common.XtChainLabel, origfw IptEntry, matchM
 	return
 }
 
-/* Delete the first rule in `chain' which matches `e', subject to
-   matchmask (array of length == origfw) */
+/*
+Delete the first rule in `chain' which matches `e', subject to
+
+	matchmask (array of length == origfw)
+*/
 func (h XtcHandle) DeleteEntry(chain common.XtChainLabel, origfw IptEntry, matchMask []byte) (result bool, osErr error) {
 	osErr = common.RelayCall(func() bool {
 		cStr := C.CString(string(chain))
@@ -465,9 +471,9 @@ func (h XtcHandle) SetPolicy(chain, policy common.XtChainLabel, counters *common
 		cPolicy := C.CString(string(policy))
 		defer C.free(unsafe.Pointer(cPolicy))
 
-		var c *_Ctype_struct_xt_counters
+		var c *C.struct_xt_counters
 		if counters != nil {
-			c = &_Ctype_struct_xt_counters{}
+			c = &C.struct_xt_counters{}
 			c.bcnt = C.__u64(counters.Bcnt)
 			c.pcnt = C.__u64(counters.Pcnt)
 		}
@@ -554,7 +560,7 @@ func (h XtcHandle) SetCounter(chain common.XtChainLabel, ruleNum uint, counters 
 		cStr := C.CString(string(chain))
 		defer C.free(unsafe.Pointer(cStr))
 
-		var c _Ctype_struct_xt_counters
+		var c C.struct_xt_counters
 		c.bcnt = C.__u64(counters.Bcnt)
 		c.pcnt = C.__u64(counters.Pcnt)
 
